@@ -55,7 +55,7 @@
 
 <header>
     <div class="logomarca">
-        <img src="lg.png" alt="Logomarca Escritório de Advocacia em São Paulo">
+        <img src="logo-horizontal-Bg7FhKR_.png" alt="Logomarca Escritório de Advocacia em São Paulo">
     </div>
 <div class="menu-hamburguer" id="menu-hamburguer">
     <span></span>
@@ -64,12 +64,22 @@
 </div>
 
     <nav class="menu">
-        <ul class="menu-links">
+        <ul class="menu-links"> 
             <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Áreas de Atuação</a></li>
-            <li><a href="#">Artigos Jurídicos</a></li>
-            <li><a href="#">Contato</a></li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li class="menu-item has-submenu" aria-haspopup="true" aria-expanded="false">
+                <a href="#" aria-controls="submenu-areas" aria-expanded="false">
+                    Áreas de Atuação <span class="caret" aria-hidden="true">▾</span>
+                </a>
+                <ul id="submenu-areas" class="submenu" aria-label="Áreas de Atuação" hidden>
+                    <li><a href="areas/civil.html">Direito Civil</a></li>
+                    <li><a href="areas/trabalhista.html">Direito Trabalhista</a></li>
+                    <li><a href="areas/previdenciario.html">Direito Previdenciário</a></li>
+                    <li><a href="areas/empresarial.html">Direito Empresarial</a></li>
+                </ul>
+            </li>
+            <li><a href="artigos.html">Artigos Jurídicos</a></li>
+            <li><a href="#contato">Contato</a></li></ul>
         </ul>
 
         <ul class="menu-contato">
@@ -225,37 +235,101 @@
 
     </div>
 </section>
+<!-- ===============================
+     FOOTER LUXURY - DEL PINO ADVOCACIA
+================================== -->
+<footer class="footer-luxo">
 
-<footer>
-    <p>&copy; 2026 Escritório de Advocacia em São Paulo. Todos os direitos reservados.</p>
+    <div class="linha-dourada"></div>
+
+    <div class="container-footer">
+
+        <!-- Coluna 1 -->
+        <div class="footer-col">
+            <h2 class="logo-footer">Del Pino Advocacia</h2>
+            <p class="texto-institucional">
+                Desde 2008 defendendo os direitos de nossos clientes com
+                dedicação, ética e resultados comprovados.
+            </p>
+        </div>
+
+        <!-- Coluna 2 -->
+        <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Áreas de Atuação</a></li>
+                <li><a href="#">Sobre Nós</a></li>
+                <li><a href="#">Equipe</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </div>
+
+        <!-- Coluna 3 -->
+        <div class="footer-col contato">
+            <h4>Contato</h4>
+            <p><a href="tel:+5511981025561">(11) 98102-5561</a></p>
+            <p><a href="mailto:contato@delpino.adv.br">contato@delpino.adv.br</a></p>
+            <p>São Mateus e Teotônio Vilela</p>
+            <p>São Paulo - SP</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Del Pino Advocacia — Todos os direitos reservados.</p>
+    </div>
+
 </footer>
-<script>
-const botaoMenu = document.getElementById("menu-hamburguer");
-const menu = document.querySelector("nav.menu");
 
-botaoMenu.addEventListener("click", () => {
-    menu.classList.toggle("ativo");
-});
-</script>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const grid = document.querySelector(".comentarios-grid");
     if (!grid) return;
 
     let index = 0;
+    let intervalo;
+    let isHovered = false;
 
-    setInterval(() => {
-        const cards = grid.children;
-        if (!cards.length) return;
+    function iniciarAutoplay() {
+        intervalo = setInterval(() => {
 
-        index = (index + 1) % cards.length;
-        cards[index].scrollIntoView({
-            behavior: "smooth",
-            inline: "center"
-        });
-    }, 4000);
+            if (isHovered) return;
+
+            const cards = grid.children;
+            if (!cards.length) return;
+
+            index = (index + 1) % cards.length;
+
+            const cardWidth = cards[0].offsetWidth + 20; // 20 = gap
+            grid.scrollTo({
+                left: cardWidth * index,
+                behavior: "smooth"
+            });
+
+        }, 4000);
+    }
+
+    function pararAutoplay() {
+        clearInterval(intervalo);
+    }
+
+    // Pausa no hover (desktop)
+    grid.addEventListener("mouseenter", () => {
+        isHovered = true;
+    });
+
+    grid.addEventListener("mouseleave", () => {
+        isHovered = false;
+    });
+
+    // Pausa ao tocar (mobile)
+    grid.addEventListener("touchstart", pararAutoplay);
+    grid.addEventListener("touchend", iniciarAutoplay);
+
+    iniciarAutoplay();
 });
 </script>
-
 </body>
 </html>
